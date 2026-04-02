@@ -1,10 +1,17 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
+import React from 'react'
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="">
-      <h1 className="">WelCome ByuNest App</h1>
+    <div>
       <Button>Hello</Button>
+      {/* 
+      
+      DbUser: buynext-ecommerce
+      Pass: buynext-ecommerce
+      */}
     </div>
-  );
+  )
 }
+
+export default Home
