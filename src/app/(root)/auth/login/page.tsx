@@ -1,8 +1,13 @@
+import { Card, CardContent } from '@/components/ui/card'
 import React from 'react'
 
 const LoginPage = () => {
   return (
-    <div>LoginPage</div>
+    <section>
+        <Card>
+            <CardContent></CardContent>
+        </Card>
+    </section>
   )
 }
 
