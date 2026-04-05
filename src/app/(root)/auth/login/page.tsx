@@ -15,9 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import ButtonSpinner from "@/components/ApplicationUi/ButtonSpinner";
 import { useState } from "react";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const fromSchema = zodSchema.pick({
     email: true,
@@ -113,7 +115,7 @@ const LoginPage = () => {
                 control={form.control}
                 rules={{ required: "Password required" }}
                 render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
+                  <Field data-invalid={fieldState.invalid} className="relative">
                     <FieldLabel htmlFor="form-rhf-input-password">
                       Password
                     </FieldLabel>
@@ -121,9 +123,12 @@ const LoginPage = () => {
                       {...field}
                       id="form-rhf-input-password"
                       placeholder="*********"
-                      type="password"
-                      className="py-5 px-4"
+                      type={showPassword ? "text" : "password"}
+                      className="py-5 px-4 relative"
                     />
+                    <span className="absolute -right-85 top-10 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <IoEye /> : <IoEyeOff />}
+                    </span>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
