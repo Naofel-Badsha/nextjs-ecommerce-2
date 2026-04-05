@@ -16,24 +16,29 @@ import { useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Link from "next/link";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const fromSchema = zodSchema.pick({
     email: true,
     password: true,
+    confirmPassword: true,
   });
 
   const form = useForm<{ email: string; password: string; username: string }>({
     resolver: zodResolver(zodSchema),
     defaultValues: {
-      email: "",
-      password: "",
+     username: "",
+     email: "",
+     password: "",
+     confirmPassword: "",
+
     },
   });
 
-  const handleLoginSubmit = async (values: any) => {
+  const handleRegisterSubmit = async (values: any) => {
     console.log(values);
   };
 
@@ -50,17 +55,40 @@ const LoginPage = () => {
             />
           </div>
           <div className="space-y-2 text-center">
-            <h1 className="text-xl font-semibold mt-5">Login Into Account</h1>
+            <h1 className="text-xl font-semibold mt-5">Create Account</h1>
             <p className="text-[13px]">
-              Login into your account by filling out the form below.
+              Create new account by filling out the form below.
             </p>
           </div>
 
           <div className="mt-5">
             <form
-              onSubmit={form.handleSubmit(handleLoginSubmit)}
+              onSubmit={form.handleSubmit(handleRegisterSubmit)}
               className="space-y-4"
             >
+              {/*-------Username--------*/}
+              <Controller
+                name="username"
+                control={form.control}
+                // rules={{ required: "Username required" }}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-rhf-input-username">
+                      Full Name
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-rhf-input-username"
+                      placeholder="Mr. Shadcn"
+                      className="py-5 px-4"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+
               {/*---------Email---------*/}
               <Controller
                 name="email"
@@ -101,10 +129,7 @@ const LoginPage = () => {
                       type={showPassword ? "text" : "password"}
                       className="py-5 px-4 relative"
                     />
-                    <span
-                      className="absolute -right-85 top-10 cursor-pointer"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
+                    <span className="absolute -right-85 top-10 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? <IoEye /> : <IoEyeOff />}
                     </span>
                     {fieldState.invalid && (
@@ -114,31 +139,52 @@ const LoginPage = () => {
                 )}
               />
 
+              {/*---------Confirm----Password---------*/}
+              <Controller
+                name="confirmPassword"
+                control={form.control}
+                rules={{ required: "Confirm Password required" }}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid} className="relative">
+                    <FieldLabel htmlFor="form-rhf-input-confirmPassword">
+                      Confirm Password
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-rhf-input-confirmPassword"
+                      placeholder="*********"
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="py-5 px-4 relative"
+                    />
+                    <span className="absolute -right-85 top-10 cursor-pointer" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                      {showConfirmPassword ? <IoEye /> : <IoEyeOff />}
+                    </span>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+
               <ButtonSpinner
-                loading={loading}
+              loading={loading}
                 type="submit"
-                text="Login"
+                text="Register"
                 className="w-full py-5 mt-5 bg-[#F5690D] text-white hover:bg-[#02376C] hover:text-white cursor-pointer duration-300"
               >
-                Login
+                Register
               </ButtonSpinner>
               <div className="text-center mt-4">
                 <p className="text-sm">
-                  Don't have account?{" "}
-                  <Link
-                    href="/auth/register"
-                    className="text-[#F5690D] hover:underline"
-                  >
-                    Register
+                 Allready Don't have account?{' '}
+                  <Link href="/auth/login" className="text-[#F5690D] hover:underline">
+                    Login
                   </Link>
                 </p>
               </div>
               <div className="text-center mt-4">
                 <p className="text-sm">
-                  <Link
-                    href="/auth/register"
-                    className="text-[#F5690D] hover:underline"
-                  >
+                  <Link href="/auth/register" className="text-[#F5690D] hover:underline">
                     Forget Password?
                   </Link>
                 </p>
@@ -151,4 +197,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
