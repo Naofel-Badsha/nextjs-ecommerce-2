@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
@@ -14,8 +13,12 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import ButtonSpinner from "@/components/ApplicationUi/ButtonSpinner";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
+
   const fromSchema = zodSchema.pick({
     email: true,
     password: true,
@@ -31,9 +34,7 @@ const LoginPage = () => {
   });
 
   const handleLoginSubmit = async (values: any) => {
-    values = { username: "typed_value" };
-    console.log("Field value:", values.username);
-    console.log("Field type:", typeof values.username);
+    console.log(values);
   };
 
   return (
@@ -56,7 +57,10 @@ const LoginPage = () => {
           </div>
 
           <div className="mt-5">
-            <form onSubmit={form.handleSubmit(handleLoginSubmit)} className="space-y-4">
+            <form
+              onSubmit={form.handleSubmit(handleLoginSubmit)}
+              className="space-y-4"
+            >
               {/*-------Username--------*/}
               <Controller
                 name="username"
@@ -81,7 +85,7 @@ const LoginPage = () => {
               />
 
               {/*---------Email---------*/}
-              <Controller 
+              <Controller
                 name="email"
                 control={form.control}
                 rules={{ required: "Email required" }}
@@ -127,9 +131,14 @@ const LoginPage = () => {
                 )}
               />
 
-              <Button type="submit" className="w-full py-5 mt-5">
+              <ButtonSpinner
+              loading={loading}
+                type="submit"
+                text="Login"
+                className="w-full py-5 mt-5 bg-[#F5690D] text-white hover:bg-[#02376C] hover:text-white cursor-pointer duration-300"
+              >
                 Login
-              </Button>
+              </ButtonSpinner>
             </form>
           </div>
         </CardContent>
