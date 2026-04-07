@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/databaseConnection";
-import { response } from "@/lib/helperFunction";
+import { catchError, response } from "@/lib/helperFunction";
 import { zodSchema } from "@/lib/zodSchema";
 import { SignJWT } from "jose";
 import UserModal from "../../../../../models/User.model";
@@ -54,8 +54,8 @@ export async function POST(request: Request) {
       ),
     );
     return response(true, 200, "User registered successfully, please verify your email");
-  } catch (error) {
-    console.error("Error connecting to database:", error);
-    return response(false, 500, "Internal Server Error");
+  
+} catch (error) {
+    catchError(error, "Failed to register user");
   }
 }

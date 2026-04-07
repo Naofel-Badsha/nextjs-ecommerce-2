@@ -15,6 +15,7 @@ import ButtonSpinner from "@/components/ApplicationUi/ButtonSpinner";
 import { useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import Link from "next/link";
+import axios from "axios";
 
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
@@ -39,8 +40,23 @@ const RegisterPage = () => {
   });
 
   const handleRegisterSubmit = async (values: any) => {
-    console.log(values);
+    try{
+      setLoading(true);
+      const {data: registerResponse } = await axios.post("/api/auth/register", values);
+      if(!registerResponse.success){
+        throw new Error(registerResponse.message)
+      }
+      form.reset();
+      alert(registerResponse.message);
+
+    }catch(error){
+      console.log(error);
+    }finally{
+      setLoading(false);
+    }
   };
+
+
 
   return (
     <section>
