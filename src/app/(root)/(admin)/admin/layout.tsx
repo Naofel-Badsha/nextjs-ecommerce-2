@@ -1,9 +1,16 @@
+import AppSidebar from '@/components/ApplicationUi/Admin/AppSidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import React from 'react'
 
-const layout = ({children}: {children: React.ReactNode}) => {
+const DashboardLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <div>{children}</div>
+    <div>
+      <SidebarProvider>
+        <AppSidebar />
+        <main>{children}</main>
+      </SidebarProvider>
+    </div>
   )
 }
 
-export default layout
+export default DashboardLayout
