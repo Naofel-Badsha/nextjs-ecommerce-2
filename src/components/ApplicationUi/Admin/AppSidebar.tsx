@@ -8,11 +8,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FaBars } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { adminSidebarMenu } from "@/lib/adminSiderbarMenu";
 import {
   Collapsible,
@@ -20,9 +21,12 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { LuChevronRight } from "react-icons/lu";
-import { useState } from "react";
+
 
 const AppSidebar = () => { 
+   const {toggleSidebar} = useSidebar();
+
+
   return (
     <Sidebar  >
       <SidebarHeader className="border-b h-14 p-0 px-1">
@@ -36,8 +40,8 @@ const AppSidebar = () => {
             />
             <span className="font-medium">BuyNest</span>
           </Link>
-          <Button className="cursor-pointer">
-            <FaBars />
+          <Button onClick={toggleSidebar} className="cursor-pointer md:hidden">
+            <FaTimes />
           </Button>
         </div>
       </SidebarHeader>

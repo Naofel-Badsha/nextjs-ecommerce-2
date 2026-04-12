@@ -1,9 +1,12 @@
-import React from 'react'
+"use client"
 import UserDropdown from './UserDropdown'
 import { Button } from '@/components/ui/button'
 import { FaBars } from 'react-icons/fa'
+import { useSidebar } from '@/components/ui/sidebar'
 
 const DashboardTopbar = () => {
+  const {toggleSidebar} = useSidebar();
+
   return (
     <div className='sticky border h-14 w-full top-0 left-0 right-0 z-30
     flex items-center justify-between bg-white p-4'>
@@ -12,7 +15,7 @@ const DashboardTopbar = () => {
       </div>
       <div className="flex items-center gap-2">
         <UserDropdown />
-        <Button type='button' size='icon' className='cursor-pointer md:hidden'>
+        <Button onClick={toggleSidebar} type='button' size='icon' className='cursor-pointer md:hidden'>
           <FaBars />
         </Button>
       </div>
